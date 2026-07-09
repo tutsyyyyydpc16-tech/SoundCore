@@ -77,17 +77,20 @@ public class Janela extends JFrame {
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
-            caminhoMusica = musicas.getSelectedFile().getPath();
+            musicaAtual = new Musica(
+                    musicas.getSelectedFile().getName(),
+                    musicas.getSelectedFile().getPath()
+            );
         }
 
-        musica.setText(musicas.getSelectedFile().getName());
+        musica.setText(musicaAtual.getNome());
 
     }
 
     private JLabel musica;
     private JLabel artista;
     private JLabel capa;
-    private File musicaAtual;
+    private Musica musicaAtual;
     private String caminhoMusica;
 
 }
