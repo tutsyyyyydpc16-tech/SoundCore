@@ -80,6 +80,8 @@ public class Janela extends JFrame {
             caminhoMusica = musicas.getSelectedFile().getPath();
         }
 
+        musica.setText(musicas.getSelectedFile().getName());
+
     }
 
     private JLabel musica;
