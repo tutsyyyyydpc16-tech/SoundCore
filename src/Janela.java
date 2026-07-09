@@ -30,8 +30,17 @@ public class Janela extends JFrame {
         JButton anterior = new JButton("<<");
         control.add(anterior);
 
-        JButton play = new JButton("▶ Play");
+        play = new JButton("▶ Play");
         control.add(play);
+
+        play.addActionListener(e -> {
+
+            if (musicaAtual != null) {
+
+                reprodutor.tocar(musicaAtual);
+            }
+
+        });
 
         JButton seguinte = new JButton(">>");
         control.add(seguinte);
@@ -92,5 +101,7 @@ public class Janela extends JFrame {
     private JLabel capa;
     private Musica musicaAtual;
     private String caminhoMusica;
+    private Player reprodutor = new Player();
+    private JButton play;
 
 }
