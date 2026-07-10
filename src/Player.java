@@ -20,6 +20,13 @@ public class Player {
         Media media = new Media(new File(musica.getCaminho()).toURI().toString());
 
         player = new MediaPlayer(media);
+
+        player.setOnEndOfMedia(() -> {
+
+            if (aoTerminar != null) {
+                aoTerminar.run();
+            }
+        });
         player.play();
 
     }
@@ -78,4 +85,11 @@ public class Player {
 
         player.seek(novo);
     }
+
+    public void setAoTerminar(Runnable acao) {
+
+        this.aoTerminar = acao;
+    }
+
+    private Runnable aoTerminar;
 }

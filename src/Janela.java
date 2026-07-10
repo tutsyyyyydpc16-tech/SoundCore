@@ -17,6 +17,8 @@ public class Janela extends JFrame {
         PainelCentral();
         PainelPlaylist();
 
+        reprodutor.setAoTerminar(() -> SwingUtilities.invokeLater(this::tocarProxima));
+
         setVisible(true);
 
     }
