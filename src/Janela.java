@@ -38,6 +38,8 @@ public class Janela extends JFrame {
 
         carregarPlaylistSalva();
 
+        AplicarTemaEscuro();
+
         addWindowListener(new java.awt.event.WindowAdapter() {
 
             @Override
@@ -360,6 +362,48 @@ public class Janela extends JFrame {
         }
     }
 
+    public void AplicarTemaEscuro() {
+
+        getContentPane().setBackground(FUNDO);
+        aplicarTemaComponente(getContentPane());
+    }
+
+    private void aplicarTemaComponente(Component componente) {
+
+        if (componente instanceof JPanel) {
+            componente.setBackground(FUNDO);
+        }
+        else if (componente instanceof JButton botao) {
+
+            botao.setBackground(FUNDO_CLARO);
+            botao.setBackground(TEXTO);
+            botao.setFocusPainted(false);
+            botao.setBorder(BorderFactory.createLineBorder(DESTAQUE));
+        }
+        else if (componente instanceof JLabel rotulo) {
+            rotulo.setForeground(TEXTO);
+        }
+        else if (componente instanceof JList<?> lista) {
+            lista.setBackground(FUNDO_CLARO);
+            lista.setForeground(TEXTO);
+            lista.setSelectionBackground(DESTAQUE);
+            lista.setSelectionForeground(Color.WHITE);
+        }
+        else if (componente instanceof JScrollPane painel) {
+            painel.getViewport().setBackground(FUNDO_CLARO);
+            painel.setBorder(BorderFactory.createLineBorder(DESTAQUE));
+        }
+        else if (componente instanceof JSlider slider) {
+            slider.setBackground(FUNDO);
+            slider.setForeground(TEXTO);
+        }
+        if (componente instanceof Container container) {
+            for (Component filho : container.getComponents()) {
+                aplicarTemaComponente(filho);
+            }
+        }
+    }
+
     private JLabel musica;
     private JLabel artista;
     private JLabel capa;
@@ -372,5 +416,9 @@ public class Janela extends JFrame {
     private JSlider progresso;
     private boolean arrastando = false;
     private PlaylistStorage storage = new PlaylistStorage();
+    private static final Color FUNDO = new Color(30, 30, 30);
+    private static final Color FUNDO_CLARO = new Color(45, 45, 45);
+    private static final Color TEXTO = new Color(230, 230, 230);
+    private static final Color DESTAQUE = new Color(70, 130, 180);
 
 }
