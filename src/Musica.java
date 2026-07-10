@@ -18,4 +18,10 @@ public class Musica {
 
         return caminho;
     }
+
+    @Override
+    public String toString() {
+
+        return nome;
+    }
 }

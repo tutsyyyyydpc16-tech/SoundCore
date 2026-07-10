@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 public class Janela extends JFrame {
@@ -14,6 +15,7 @@ public class Janela extends JFrame {
 
         Controles();
         PainelCentral();
+        PainelPlaylist();
 
         setVisible(true);
 
@@ -79,15 +81,12 @@ public class Janela extends JFrame {
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
-            musicaAtual = new Musica(
+            Musica nova = new Musica(
                     musicas.getSelectedFile().getName(),
                     musicas.getSelectedFile().getPath()
             );
 
-            musica.setText(musicaAtual.getNome());
-
-            reprodutor.tocar(musicaAtual);
-            play.setText("⏸ Pause");
+            playlistModel.addElement(nova);
         }
     }
 
@@ -110,6 +109,39 @@ public class Janela extends JFrame {
         }
     }
 
+    public void PainelPlaylist() {
+
+        playlistModel = new DefaultListModel<>();
+        listaPlaylist = new JList<>(playlistModel);
+
+        listaPlaylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        listaPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
+
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+
+                if (e.getClickCount() == 2) {
+
+                    Musica selecionada = listaPlaylist.getSelectedValue();
+                    if (selecionada != null) {
+
+                        musicaAtual = selecionada;
+                        musica.setText(musicaAtual.getNome());
+                        reprodutor.tocar(musicaAtual);
+                        play.setText("⏸ Pause");
+                    }
+                }
+            }
+        });
+
+        JScrollPane scroll = new JScrollPane(listaPlaylist);
+        scroll.setPreferredSize(new Dimension(200, 0));
+        scroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        add(scroll, BorderLayout.EAST);
+    }
+
     private JLabel musica;
     private JLabel artista;
     private JLabel capa;
@@ -117,5 +149,7 @@ public class Janela extends JFrame {
     private String caminhoMusica;
     private Player reprodutor = new Player();
     private JButton play;
+    private DefaultListModel<Musica> playlistModel;
+    private JList<Musica> listaPlaylist;
 
 }
