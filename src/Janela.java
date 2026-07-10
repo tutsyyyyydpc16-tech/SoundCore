@@ -21,6 +21,8 @@ public class Janela extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        DefinirIcone();
+
         Controles();
         PainelCentral();
         PainelPlaylist();
@@ -51,6 +53,16 @@ public class Janela extends JFrame {
 
         setVisible(true);
 
+    }
+
+    private void DefinirIcone() {
+
+        try {
+            Image icone = new ImageIcon("Resource/SoundCore.png").getImage();
+            setIconImage(icone);
+        } catch (Exception e) {
+            System.out.println("Não consegui carregar o ícone: " + e.getMessage());
+        }
     }
 
     private void carregarPlaylistSalva() {
