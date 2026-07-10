@@ -1,3 +1,8 @@
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.images.Artwork;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -114,7 +119,29 @@ public class Janela extends JFrame {
                     musicas.getSelectedFile().getPath()
             );
 
+            lerCapa(nova);
+
             playlistModel.addElement(nova);
+        }
+    }
+
+    private void lerCapa(Musica m) {
+
+        try {
+
+            AudioFile audioFile = AudioFileIO.read(new File(m.getCaminho()));
+            Tag tag = audioFile.getTag();
+
+            if (tag != null) {
+
+                Artwork artwork = tag.getFirstArtwork();
+
+                if (artwork != null) {
+                    m.setCapa(artwork.getBinaryData());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Não consegui ler capa de " + m.getNome());
         }
     }
 
@@ -202,6 +229,28 @@ public class Janela extends JFrame {
         play.setText("⏸ Pause");
 
         listaPlaylist.setSelectedIndex(indice);
+
+        atualizarCapa();
+    }
+
+    private void atualizarCapa() {
+
+        if (musicaAtual.getCapa() != null) {
+
+            ImageIcon icone = new ImageIcon(
+                    new ImageIcon(musicaAtual.getCapa())
+                            .getImage()
+                            .getScaledInstance(150, 150, Image.SCALE_SMOOTH)
+            );
+
+            capa.setIcon(icone);
+            capa.setText(null);
+
+        }
+        else {
+            capa.setIcon(null);
+            capa.setText("[Nenhuma capa!]");
+        }
     }
 
     public void PainelProgresso() {
