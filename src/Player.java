@@ -23,6 +23,7 @@ public class Player {
         Media media = new Media(new File(musica.getCaminho()).toURI().toString());
 
         player = new MediaPlayer(media);
+        player.setVolume(volumeAtual);
 
         player.setOnEndOfMedia(() -> {
 
@@ -117,6 +118,13 @@ public class Player {
         }
     }
 
+    public void setVolume(double volume) {
+        if (player != null) {
+            player.setVolume(volume);
+        }
+    }
+
     private Runnable aoTerminar;
     private ProgressoListener progressoListener;
+    private double volumeAtual = 0.7;
 }

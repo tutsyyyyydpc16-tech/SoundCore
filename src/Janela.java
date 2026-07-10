@@ -61,6 +61,13 @@ public class Janela extends JFrame {
         control.add(seguinteMusica);
         seguinteMusica.addActionListener(e -> tocarProxima());
 
+        JSlider volume = new JSlider(0, 100, 70);
+        volume.setPreferredSize(new Dimension(100, 20));
+        control.add(new JLabel("🔊"));
+        control.add(volume);
+
+        volume.addChangeListener(e -> reprodutor.setVolume(volume.getValue() / 100.0));
+
         add(control, BorderLayout.SOUTH);
 
         control.setBorder(BorderFactory.createLineBorder(Color.BLACK));
