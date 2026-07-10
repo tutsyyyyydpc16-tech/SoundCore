@@ -16,8 +16,17 @@ public class Janela extends JFrame {
         Controles();
         PainelCentral();
         PainelPlaylist();
+        PainelProgresso();
 
         reprodutor.setAoTerminar(() -> SwingUtilities.invokeLater(this::tocarProxima));
+        reprodutor.setProgressoListener((atual, total) -> SwingUtilities.invokeLater(() -> {
+
+            if (!arrastando) {
+                progresso.setMaximum((int) total);
+                progresso.setValue((int) atual);
+            }
+
+        }));
 
         setVisible(true);
 
@@ -188,6 +197,27 @@ public class Janela extends JFrame {
         listaPlaylist.setSelectedIndex(indice);
     }
 
+    public void PainelProgresso() {
+
+        progresso = new JSlider(0, 100, 0);
+
+        progresso.addMouseListener(new java.awt.event.MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                arrastando = true;
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                arrastando = false;
+                reprodutor.seek(progresso.getValue());
+            }
+        });
+
+        add(progresso, BorderLayout.NORTH);
+    }
+
     private JLabel musica;
     private JLabel artista;
     private JLabel capa;
@@ -197,5 +227,7 @@ public class Janela extends JFrame {
     private JButton play;
     private DefaultListModel<Musica> playlistModel;
     private JList<Musica> listaPlaylist;
+    private JSlider progresso;
+    private boolean arrastando = false;
 
 }

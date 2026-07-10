@@ -2,8 +2,11 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.awt.event.MouseEvent;
 import java.io.File;
 import javafx.util.Duration;
+
+import javax.swing.*;
 
 public class Player {
 
@@ -27,6 +30,16 @@ public class Player {
                 aoTerminar.run();
             }
         });
+
+        player.currentTimeProperty().addListener((obs, tempoAntigo, tempoNovo) -> {
+            if (progressoListener != null && player.getTotalDuration() != null) {
+                progressoListener.aoAtualizar(
+                        tempoNovo.toSeconds(),
+                        player.getTotalDuration().toSeconds()
+                );
+            }
+        });
+
         player.play();
 
     }
@@ -87,9 +100,23 @@ public class Player {
     }
 
     public void setAoTerminar(Runnable acao) {
-
         this.aoTerminar = acao;
     }
 
+    public interface ProgressoListener {
+        void aoAtualizar(double atualSegundos, double totalSegundos);
+    }
+
+    public void setProgressoListener(ProgressoListener listener) {
+        this.progressoListener = listener;
+    }
+
+    public void seek(double segundos) {
+        if (player != null) {
+            player.seek(Duration.seconds(segundos));
+        }
+    }
+
     private Runnable aoTerminar;
+    private ProgressoListener progressoListener;
 }
