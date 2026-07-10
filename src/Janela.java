@@ -1,5 +1,6 @@
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.images.Artwork;
 
@@ -119,29 +120,9 @@ public class Janela extends JFrame {
                     musicas.getSelectedFile().getPath()
             );
 
-            lerCapa(nova);
+            lerMetadados(nova);
 
             playlistModel.addElement(nova);
-        }
-    }
-
-    private void lerCapa(Musica m) {
-
-        try {
-
-            AudioFile audioFile = AudioFileIO.read(new File(m.getCaminho()));
-            Tag tag = audioFile.getTag();
-
-            if (tag != null) {
-
-                Artwork artwork = tag.getFirstArtwork();
-
-                if (artwork != null) {
-                    m.setCapa(artwork.getBinaryData());
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Não consegui ler capa de " + m.getNome());
         }
     }
 
@@ -231,6 +212,17 @@ public class Janela extends JFrame {
         listaPlaylist.setSelectedIndex(indice);
 
         atualizarCapa();
+        atualizarArtista();
+    }
+
+    private void atualizarArtista() {
+
+        if (musicaAtual.getArtista() != null) {
+            artista.setText(musicaAtual.getArtista());
+        }
+        else {
+            artista.setText("Artista não identificado");
+        }
     }
 
     private void atualizarCapa() {
@@ -272,6 +264,31 @@ public class Janela extends JFrame {
         });
 
         add(progresso, BorderLayout.NORTH);
+    }
+
+    private void lerMetadados(Musica m) {
+
+        try {
+
+            AudioFile audioFile = AudioFileIO.read(new File(m.getCaminho()));
+            Tag tag = audioFile.getTag();
+
+            if (tag != null) {
+
+                Artwork artwork = tag.getFirstArtwork();
+
+                if (artwork != null) {
+                    m.setCapa(artwork.getBinaryData());
+                }
+
+                String nomeArtista = tag.getFirst(FieldKey.ARTIST);
+                if (nomeArtista != null && !nomeArtista.isEmpty()) {
+                    m.setArtista(nomeArtista);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Não consegui ler metadados de " + m.getNome());
+        }
     }
 
     private JLabel musica;

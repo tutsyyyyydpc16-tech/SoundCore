@@ -29,4 +29,14 @@ public class Musica {
     public String toString() {
         return nome;
     }
+
+    public String getArtista() {
+        return artistaMusica;
+    }
+
+    public void setArtista(String artistaMusica) {
+        this.artistaMusica = artistaMusica;
+    }
+
+    private String artistaMusica;
 }
