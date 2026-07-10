@@ -29,8 +29,13 @@ public class Janela extends JFrame {
         control.add(abrirMusica);
         abrirMusica.addActionListener(e -> AbrirMusica());
 
+        JButton anteriorMusica = new JButton("⏮");
+        control.add(anteriorMusica);
+        anteriorMusica.addActionListener(e -> tocarAnterior());
+
         JButton anterior = new JButton("<<");
         control.add(anterior);
+        anterior.addActionListener(e -> reprodutor.retroceder(10));
 
         play = new JButton("▶ Play");
         control.add(play);
@@ -39,6 +44,11 @@ public class Janela extends JFrame {
 
         JButton seguinte = new JButton(">>");
         control.add(seguinte);
+        seguinte.addActionListener(e -> reprodutor.avancar(10));
+
+        JButton seguinteMusica = new JButton("⏭");
+        control.add(seguinteMusica);
+        seguinteMusica.addActionListener(e -> tocarProxima());
 
         add(control, BorderLayout.SOUTH);
 
@@ -123,13 +133,9 @@ public class Janela extends JFrame {
 
                 if (e.getClickCount() == 2) {
 
-                    Musica selecionada = listaPlaylist.getSelectedValue();
-                    if (selecionada != null) {
-
-                        musicaAtual = selecionada;
-                        musica.setText(musicaAtual.getNome());
-                        reprodutor.tocar(musicaAtual);
-                        play.setText("⏸ Pause");
+                    int indiceClicado = listaPlaylist.getSelectedIndex();
+                    if (indiceClicado != -1) {
+                        tocarDaPlaylist(indiceClicado);
                     }
                 }
             }
@@ -140,6 +146,44 @@ public class Janela extends JFrame {
         scroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         add(scroll, BorderLayout.EAST);
+    }
+
+    private void tocarProxima() {
+
+        int tamanho = playlistModel.getSize();
+
+        if (tamanho == 0) {
+            return;
+        }
+
+        int indiceAtual = playlistModel.indexOf(musicaAtual);
+        int proximoIndice = (indiceAtual + 1) % tamanho;
+
+        tocarDaPlaylist(proximoIndice);
+    }
+
+    private void tocarAnterior() {
+
+        int tamanho = playlistModel.getSize();
+
+        if (tamanho == 0) {
+            return;
+        }
+
+        int indiceAtual = playlistModel.indexOf(musicaAtual);
+        int anteriorIndice = (indiceAtual - 1 + tamanho) % tamanho;
+
+        tocarDaPlaylist(anteriorIndice);
+    }
+
+    private void tocarDaPlaylist(int indice) {
+
+        musicaAtual = playlistModel.getElementAt(indice);
+        musica.setText(musicaAtual.getNome());
+        reprodutor.tocar(musicaAtual);
+        play.setText("⏸ Pause");
+
+        listaPlaylist.setSelectedIndex(indice);
     }
 
     private JLabel musica;

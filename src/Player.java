@@ -3,17 +3,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import javafx.util.Duration;
 
 public class Player {
 
     private MediaPlayer player;
-
-    public Player() {
-
-
-    }
-
-
 
     public void tocar(Musica musica) {
 
@@ -49,5 +43,39 @@ public class Player {
     public boolean tocando() {
 
         return player != null && player.getStatus() == MediaPlayer.Status.PLAYING;
+    }
+
+    public void avancar(double segundos) {
+
+        if (player == null) {
+
+            return;
+        }
+
+        Duration atual = player.getCurrentTime();
+        Duration total = player.getTotalDuration();
+        Duration novo = atual.add(Duration.seconds(segundos));
+
+        if (total != null && novo.greaterThan(total)) {
+            novo = total;
+        }
+
+        player.seek(novo);
+    }
+
+    public void retroceder(double segundos) {
+
+        if (player == null) {
+            return;
+        }
+
+        Duration atual = player.getCurrentTime();
+        Duration novo = atual.subtract(Duration.seconds(segundos));
+
+        if (novo.lessThan(Duration.ZERO)) {
+            novo = Duration.ZERO;
+        }
+
+        player.seek(novo);
     }
 }
