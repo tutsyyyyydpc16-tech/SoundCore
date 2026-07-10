@@ -206,10 +206,41 @@ public class Janela extends JFrame {
         });
 
         JScrollPane scroll = new JScrollPane(listaPlaylist);
-        scroll.setPreferredSize(new Dimension(200, 0));
         scroll.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        add(scroll, BorderLayout.EAST);
+        JButton remover = new JButton("Remover da Playlist");
+        remover.addActionListener(e -> removerSelecionado());
+
+        JPanel painelDireito = new JPanel(new BorderLayout());
+        painelDireito.setPreferredSize(new Dimension(200, 0));
+        painelDireito.add(scroll, BorderLayout.CENTER);
+        painelDireito.add(remover, BorderLayout.SOUTH);
+
+        add(painelDireito, BorderLayout.EAST);
+    }
+
+    private void removerSelecionado() {
+
+        int indice = listaPlaylist.getSelectedIndex();
+
+        if (indice == -1) {
+            return;
+        }
+
+        Musica selecionada = playlistModel.getElementAt(indice);
+
+        if (selecionada == musicaAtual) {
+
+            reprodutor.parar();
+            musicaAtual = null;
+            musica.setText("Nenhuma música");
+            artista.setText("Nenhum artista");
+            capa.setIcon(null);
+            capa.setText("[Nenhuma capa!]");
+            play.setText("▶ Play");
+        }
+
+        playlistModel.remove(indice);
     }
 
     private void tocarProxima() {

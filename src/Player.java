@@ -61,6 +61,16 @@ public class Player {
         }
     }
 
+    public void parar() {
+
+        if (player != null) {
+
+            player.stop();
+            player.dispose();
+            player = null;
+        }
+    }
+
     public boolean tocando() {
 
         return player != null && player.getStatus() == MediaPlayer.Status.PLAYING;
