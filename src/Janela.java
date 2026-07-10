@@ -9,6 +9,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Janela extends JFrame {
 
@@ -17,7 +19,7 @@ public class Janela extends JFrame {
         setTitle("SoundCore");
         setSize(800, 600);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         Controles();
         PainelCentral();
@@ -34,8 +36,44 @@ public class Janela extends JFrame {
 
         }));
 
+        carregarPlaylistSalva();
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                salvarPlaylistAtual();
+                System.exit(0);
+            }
+        });
+
         setVisible(true);
 
+    }
+
+    private void carregarPlaylistSalva() {
+
+        List<String> caminhos = storage.carregar();
+
+        for (String caminho : caminhos) {
+
+            File arquivo = new File(caminho);
+            Musica m = new Musica(arquivo.getName(), caminho);
+            lerMetadados(m);
+
+            playlistModel.addElement(m);
+        }
+    }
+
+    private void salvarPlaylistAtual() {
+
+        List<Musica> todas = new ArrayList<>();
+
+        for (int i = 0; i < playlistModel.getSize(); i++) {
+            todas.add(playlistModel.getElementAt(i));
+        }
+
+        storage.salvar(todas);
     }
 
     public void Controles() {
@@ -302,5 +340,6 @@ public class Janela extends JFrame {
     private JList<Musica> listaPlaylist;
     private JSlider progresso;
     private boolean arrastando = false;
+    private PlaylistStorage storage = new PlaylistStorage();
 
 }
