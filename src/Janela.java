@@ -33,14 +33,7 @@ public class Janela extends JFrame {
         play = new JButton("▶ Play");
         control.add(play);
 
-        play.addActionListener(e -> {
-
-            if (musicaAtual != null) {
-
-                reprodutor.tocar(musicaAtual);
-            }
-
-        });
+        play.addActionListener(e ->alternarPlayPause());
 
         JButton seguinte = new JButton(">>");
         control.add(seguinte);
@@ -57,9 +50,9 @@ public class Janela extends JFrame {
         central.setLayout(new GridLayout(3, 1));
 
 
-        capa = new JLabel("[Nenhuma capa]");
-        musica = new JLabel("Nenhuma música");
-        artista = new JLabel("Nenhum artista");
+        capa = new JLabel("[Nenhuma capa]", SwingConstants.CENTER);
+        musica = new JLabel("Nenhuma música", SwingConstants.CENTER);
+        artista = new JLabel("Nenhum artista", SwingConstants.CENTER);
 
         central.add(capa);
         central.add(musica);
@@ -90,10 +83,31 @@ public class Janela extends JFrame {
                     musicas.getSelectedFile().getName(),
                     musicas.getSelectedFile().getPath()
             );
+
+            musica.setText(musicaAtual.getNome());
+
+            reprodutor.tocar(musicaAtual);
+            play.setText("⏸ Pause");
+        }
+    }
+
+    private void alternarPlayPause() {
+
+        if (musicaAtual == null) {
+
+            return;
         }
 
-        musica.setText(musicaAtual.getNome());
+        if (reprodutor.tocando()) {
 
+            reprodutor.pausar();
+            play.setText("▶ Play");
+        }
+        else {
+
+            reprodutor.continuar();
+            play.setText("⏸ Pause");
+        }
     }
 
     private JLabel musica;
