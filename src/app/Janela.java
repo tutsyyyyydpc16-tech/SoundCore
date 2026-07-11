@@ -218,6 +218,7 @@ public class Janela extends JFrame {
         reprodutor.tocar(musica);
 
         ui.getPainelDireito().atualizarBotaoPlay(true);
+        ui.getPainelEsquerdo().atualizarCapa(musica.getCapa());
     }
     public void adiantarMusica() {
         reprodutor.avancar(10);

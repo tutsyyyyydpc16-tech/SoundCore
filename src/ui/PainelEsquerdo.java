@@ -15,15 +15,10 @@ public class PainelEsquerdo extends JPanel{
         setPreferredSize(new Dimension(350, 0));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        Image imagem = new ImageIcon("Resource/Disco.png").getImage();
+        fundoImagem = new ImageIcon("Resource/FundoCapa.png").getImage();
 
-        Image imagemGrande = imagem.getScaledInstance(
-                250, 250,
-                Image.SCALE_SMOOTH
-        );
-
-        disco = new JLabel(new ImageIcon(imagemGrande));
-        disco.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLayeredPane camadaDisco = criarCamadaDisco();
+        camadaDisco.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         musica = new JLabel("Nenhuma música");
         musica.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -31,14 +26,40 @@ public class PainelEsquerdo extends JPanel{
         artista = new JLabel("Nenhum artista");
         artista.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        add(Box.createVerticalStrut(30));
-        add(disco);
-        add(Box.createVerticalStrut(20));
         add(musica);
         add(artista);
+        add(camadaDisco);
+        add(Box.createVerticalStrut(30));
+        add(Box.createVerticalStrut(20));
 
         criarVolume();
+    }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        if (fundoImagem != null) {
+
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+            g2.drawImage(fundoImagem, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+
+    public void atualizarCapa(byte[] bytesCapa) {
+
+        final int TAMANHO = 250;
+
+        if (bytesCapa != null) {
+            ImageIcon icone = new ImageIcon(bytesCapa);
+            capa.setImagem(icone.getImage());
+            System.out.println("Tamanho da capa (label): " + capa.getWidth() + "x" + capa.getHeight());
+            System.out.println("Tamanho da imagem original: " + icone.getIconWidth() + "x" + icone.getIconHeight());
+        }
+        else {
+            capa.setImagem(null);
+        }
     }
 
     private void criarVolume() {
@@ -68,6 +89,7 @@ public class PainelEsquerdo extends JPanel{
 
         JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
         wrapper.setBackground(FUNDO);
+        wrapper.setOpaque(false);
         wrapper.add(volumeBarras);
 
         painelVolume.add(linhaTopo, BorderLayout.NORTH);
@@ -77,7 +99,31 @@ public class PainelEsquerdo extends JPanel{
         add(painelVolume);
     }
 
+    private JLayeredPane criarCamadaDisco() {
+
+        final int TAMANHO = 250;
+
+        JLayeredPane camada = new JLayeredPane();
+        camada.setPreferredSize(new Dimension(TAMANHO, TAMANHO));
+        camada.setMaximumSize(new Dimension(TAMANHO, TAMANHO));
+
+        capa = new PainelImagem();
+        capa.setBounds(0, 0, TAMANHO, TAMANHO);
+        camada.add(capa, Integer.valueOf(0));
+
+        Image imagemDisco = new ImageIcon("Resource/Disco.png").getImage();
+        Image discoEscalado = imagemDisco.getScaledInstance(TAMANHO, TAMANHO, Image.SCALE_SMOOTH);
+
+        disco = new JLabel(new ImageIcon(discoEscalado));
+        disco.setBounds(0, 0, TAMANHO, TAMANHO);
+        camada.add(disco, Integer.valueOf(1));
+
+        return camada;
+    }
+
     private Janela janela;
+
+    private PainelImagem capa;
 
     private JLabel musica;
     private JLabel artista;
@@ -88,4 +134,6 @@ public class PainelEsquerdo extends JPanel{
     private static final Color PAINEL = new Color(18, 27, 46);
     private static final Color FUNDO = new Color(14, 20, 34);
     private static final Color TEXTO = new Color(0 , 255, 170);
+
+    private Image fundoImagem;
 }

@@ -16,10 +16,11 @@ public class InterfaceSoundCore extends JPanel {
 
         setLayout(new BorderLayout());
 
-        add(new PainelEsquerdo(janela), BorderLayout.WEST);
+        painelEsquerdo = new PainelEsquerdo(janela);
         painelDireito = new PainelDireito(janela);
 
         add(painelDireito, BorderLayout.CENTER);
+        add(painelEsquerdo, BorderLayout.WEST);
     }
 
     public PainelDireito getPainelDireito() {
@@ -27,4 +28,10 @@ public class InterfaceSoundCore extends JPanel {
     }
 
     private PainelDireito painelDireito;
+
+    public PainelEsquerdo getPainelEsquerdo() {
+        return painelEsquerdo;
+    }
+
+    private PainelEsquerdo painelEsquerdo;
 }
