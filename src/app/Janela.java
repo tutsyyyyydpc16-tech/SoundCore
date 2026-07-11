@@ -42,6 +42,8 @@ public class Janela extends JFrame {
                 progresso.setValue((int) atual);
             }
 
+            ui.getPainelDireito().atualizarTempo(atual, total);
+
         }));
 
         carregarPlaylistSalva();

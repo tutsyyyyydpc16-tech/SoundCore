@@ -5,6 +5,7 @@ import modelo.Musica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class PainelDireito extends JPanel {
 
@@ -16,7 +17,7 @@ public class PainelDireito extends JPanel {
 
         painelSuperior = new JPanel(new BorderLayout());
         painelSuperior.setBackground(PAINEL);
-        painelSuperior.setPreferredSize(new Dimension(0, 80));
+        painelSuperior.setPreferredSize(new Dimension(0, 130));
 
         painelPlaylist = new JPanel(new BorderLayout());
         painelPlaylist.setBackground(FUNDO);
@@ -30,7 +31,7 @@ public class PainelDireito extends JPanel {
     private void criarControles() {
 
         JPanel controles = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 8));
-        controles.setBackground(new Color(18, 27, 46));
+        controles.setBackground(PAINEL);
 
         playIcon = carregarIcon("Resource/Play.png", 100, 50);
         pauseIcon = carregarIcon("Resource/Pause.png", 100, 50);
@@ -56,20 +57,57 @@ public class PainelDireito extends JPanel {
         seguinte.addActionListener(e -> janela.adiantarMusica());
         avancarMusica.addActionListener(e -> janela.tocarProxima());
 
+        configurarBarraProgresso();
+
+        JPanel blocoTempo = criarBlocoTempo();
+
+        painelSuperior.add(blocoTempo, BorderLayout.NORTH);
+        painelSuperior.add(progresso, BorderLayout.CENTER);
         painelSuperior.add(controles, BorderLayout.SOUTH);
-
-        progressoBarrinha();
-
     }
 
-    private void progressoBarrinha() {
-
+    private void configurarBarraProgresso() {
         progresso = new JSlider();
-
         configurarBarra();
+    }
 
-        painelSuperior.add(progresso, BorderLayout.NORTH);
+    private JPanel criarBlocoTempo() {
 
+        JPanel bloco = new JPanel(new BorderLayout());
+        bloco.setBackground(FUNDO_TEMPO);
+        bloco.setBorder(BorderFactory.createEmptyBorder(10,15,5,15));
+
+        tempoAtual = new JLabel("0:00");
+        tempoAtual.setForeground(NEON_VERDE);
+        tempoAtual.setFont(fontePixel(20));
+
+        JPanel tempos = new JPanel();
+        tempos.setLayout(new BoxLayout(tempos, BoxLayout.Y_AXIS));
+        tempos.setBackground(FUNDO_TEMPO);
+
+        tempoRestante = new JLabel("-0:00");
+        tempoRestante.setForeground(TEXTO_SECUNDARIO);
+        tempoRestante.setFont(fontePixel(10));
+        tempoRestante.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        tempoTotal = new JLabel("0:00");
+        tempoTotal.setForeground(TEXTO_SECUNDARIO);
+        tempoTotal.setFont(fontePixel(10));
+        tempoTotal.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+        JPanel linhasTempo = new JPanel(new BorderLayout());
+        linhasTempo.setBackground(FUNDO_TEMPO);
+        linhasTempo.add(tempoAtual, BorderLayout.WEST);
+        linhasTempo.add(tempos, BorderLayout.EAST);
+        linhasTempo.setBorder(BorderFactory.createEmptyBorder(5, 15, 0, 15));
+
+        tempos.add(tempoRestante);
+        tempos.add(tempoTotal);
+
+        bloco.add(tempoAtual, BorderLayout.WEST);
+        bloco.add(tempos, BorderLayout.EAST);
+
+        return bloco;
     }
 
     private void configurarBarra() {
@@ -80,7 +118,7 @@ public class PainelDireito extends JPanel {
         progresso.setPaintLabels(false);
         progresso.setFocusable(false);
 
-        progresso.setBackground(PAINEL);
+        progresso.setBackground(FUNDO_TEMPO);
         progresso.setForeground(TEXTO);
 
         progresso.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
@@ -231,6 +269,38 @@ public class PainelDireito extends JPanel {
         return progresso;
     }
 
+    public void atualizarTempo(double atualSegundos, double totalSegundos) {
+
+        tempoAtual.setText(formatarTempo(atualSegundos));
+        tempoTotal.setText(formatarTempo(totalSegundos));
+
+        double restante = totalSegundos - atualSegundos;
+        tempoRestante.setText("-" + formatarTempo(restante));
+    }
+
+    private String formatarTempo(double segundosTotais) {
+
+        int minutos = (int) segundosTotais / 60;
+        int segundos = (int) segundosTotais % 60;
+
+        return String.format("%d:%02d", minutos, segundos);
+    }
+
+    public Font fontePixel(int tamanho) {
+
+        try {
+
+            if (fontePixelBase == null) {
+                fontePixelBase = Font.createFont(Font.TRUETYPE_FONT, new File("Resource/PressStart2P-Regular.ttf"));
+            }
+
+            return fontePixelBase.deriveFont((float) tamanho);
+        } catch (Exception e) {
+            System.out.println("Não consegui carregar a fonte pixelada: " + e.getMessage());
+            return new Font("Consolas", Font.PLAIN, tamanho);
+        }
+    }
+
     private Janela janela;
 
     private JButton play;
@@ -246,7 +316,16 @@ public class PainelDireito extends JPanel {
     private static final Color PAINEL = new Color(18, 27, 46);
     private static final Color FUNDO = new Color(14, 20, 34);
     private static final Color TEXTO = new Color(0 , 255, 170);
+    private static final Color FUNDO_TEMPO = new Color(8, 12, 20);
+    private static final Color NEON_VERDE = new Color(0, 255,130);
+    private static final Color TEXTO_SECUNDARIO = new Color(150,160,175);
 
     private ImageIcon playIcon;
     private ImageIcon pauseIcon;
+
+    private JLabel tempoAtual;
+    private JLabel tempoRestante;
+    private JLabel tempoTotal;
+
+    private Font fontePixelBase;
 }
