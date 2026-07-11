@@ -195,6 +195,8 @@ public class Janela extends JFrame {
             AudioFile audioFile = AudioFileIO.read(new File(m.getCaminho()));
             Tag tag = audioFile.getTag();
 
+            m.setDuracaoSegundos(audioFile.getAudioHeader().getTrackLength());
+
             if (tag != null) {
 
                 Artwork artwork = tag.getFirstArtwork();

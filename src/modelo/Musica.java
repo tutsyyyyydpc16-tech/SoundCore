@@ -40,5 +40,14 @@ public class Musica {
         this.artistaMusica = artistaMusica;
     }
 
+    public int getDuracaoSegundos() {
+        return duracaoSegundos;
+    }
+
+    public void setDuracaoSegundos(int duracaoSegundos) {
+        this.duracaoSegundos = duracaoSegundos;
+    }
+
     private String artistaMusica;
+    private int duracaoSegundos;
 }

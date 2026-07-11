@@ -150,6 +150,12 @@ public class PainelDireito extends JPanel {
         playlistModel = new DefaultListModel<>();
         listaPlaylist = new JList<>(playlistModel);
 
+        listaPlaylist.setBackground(FUNDO);
+        listaPlaylist.setSelectionBackground(new Color(0, 60, 45));
+        listaPlaylist.setSelectionForeground(NEON_VERDE);
+        listaPlaylist.setFixedCellHeight(52);
+        listaPlaylist.setCellRenderer(new RenderizadorMusica());
+
         listaPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
@@ -167,6 +173,8 @@ public class PainelDireito extends JPanel {
         });
 
         JScrollPane scroll = new JScrollPane(listaPlaylist);
+        scroll.getViewport().setBackground(FUNDO);
+        scroll.setBorder(BorderFactory.createEmptyBorder());
 
         JButton remover = new JButton("- Música");
         remover.addActionListener(e -> removerSelecionado());
