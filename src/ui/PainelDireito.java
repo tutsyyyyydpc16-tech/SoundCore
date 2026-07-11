@@ -32,6 +32,7 @@ public class PainelDireito extends JPanel {
 
         JPanel controles = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 8));
         controles.setBackground(PAINEL);
+        controles.setBorder(BorderFactory.createLineBorder(BORDA, 2));
 
         playIcon = carregarIcon("Resource/Play.png", 100, 50);
         pauseIcon = carregarIcon("Resource/Pause.png", 100, 50);
@@ -75,11 +76,14 @@ public class PainelDireito extends JPanel {
 
         JPanel bloco = new JPanel(new BorderLayout());
         bloco.setBackground(FUNDO_TEMPO);
-        bloco.setBorder(BorderFactory.createEmptyBorder(10,15,5,15));
+        bloco.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(2, 2, 0, 2, BORDA),
+                BorderFactory.createEmptyBorder(10,15,5,15)
+        ));
 
         tempoAtual = new JLabel("0:00");
         tempoAtual.setForeground(NEON_VERDE);
-        tempoAtual.setFont(fontePixel(20));
+        tempoAtual.setFont(FontePixel.obter(20));
 
         JPanel tempos = new JPanel();
         tempos.setLayout(new BoxLayout(tempos, BoxLayout.Y_AXIS));
@@ -87,12 +91,12 @@ public class PainelDireito extends JPanel {
 
         tempoRestante = new JLabel("-0:00");
         tempoRestante.setForeground(TEXTO_SECUNDARIO);
-        tempoRestante.setFont(fontePixel(10));
+        tempoRestante.setFont(FontePixel.obter(10));
         tempoRestante.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         tempoTotal = new JLabel("0:00");
         tempoTotal.setForeground(TEXTO_SECUNDARIO);
-        tempoTotal.setFont(fontePixel(10));
+        tempoTotal.setFont(FontePixel.obter(10));
         tempoTotal.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         JPanel linhasTempo = new JPanel(new BorderLayout());
@@ -121,7 +125,10 @@ public class PainelDireito extends JPanel {
         progresso.setBackground(FUNDO_TEMPO);
         progresso.setForeground(TEXTO);
 
-        progresso.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        progresso.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(0, 2, 2, 2, BORDA),
+                BorderFactory.createEmptyBorder(10, 15, 10, 15)
+        ));
 
         progresso.addMouseListener(new java.awt.event.MouseAdapter() {
 
@@ -141,7 +148,6 @@ public class PainelDireito extends JPanel {
     private void criarPlaylist() {
 
         playlistModel = new DefaultListModel<>();
-
         listaPlaylist = new JList<>(playlistModel);
 
         listaPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -163,13 +169,12 @@ public class PainelDireito extends JPanel {
         JScrollPane scroll = new JScrollPane(listaPlaylist);
 
         JButton remover = new JButton("- Música");
-
         remover.addActionListener(e -> removerSelecionado());
 
         JPanel baixo = new JPanel(new BorderLayout());
-
         baixo.add(scroll,BorderLayout.CENTER);
         baixo.add(remover,BorderLayout.SOUTH);
+        baixo.setBorder(BorderFactory.createLineBorder(BORDA, 2));
 
         painelPlaylist.add(baixo, BorderLayout. CENTER);
 
@@ -286,21 +291,6 @@ public class PainelDireito extends JPanel {
         return String.format("%d:%02d", minutos, segundos);
     }
 
-    public Font fontePixel(int tamanho) {
-
-        try {
-
-            if (fontePixelBase == null) {
-                fontePixelBase = Font.createFont(Font.TRUETYPE_FONT, new File("Resource/PressStart2P-Regular.ttf"));
-            }
-
-            return fontePixelBase.deriveFont((float) tamanho);
-        } catch (Exception e) {
-            System.out.println("Não consegui carregar a fonte pixelada: " + e.getMessage());
-            return new Font("Consolas", Font.PLAIN, tamanho);
-        }
-    }
-
     private Janela janela;
 
     private JButton play;
@@ -319,6 +309,7 @@ public class PainelDireito extends JPanel {
     private static final Color FUNDO_TEMPO = new Color(8, 12, 20);
     private static final Color NEON_VERDE = new Color(0, 255,130);
     private static final Color TEXTO_SECUNDARIO = new Color(150,160,175);
+    private static final Color BORDA = new Color(0 , 255, 170);
 
     private ImageIcon playIcon;
     private ImageIcon pauseIcon;
@@ -326,6 +317,4 @@ public class PainelDireito extends JPanel {
     private JLabel tempoAtual;
     private JLabel tempoRestante;
     private JLabel tempoTotal;
-
-    private Font fontePixelBase;
 }

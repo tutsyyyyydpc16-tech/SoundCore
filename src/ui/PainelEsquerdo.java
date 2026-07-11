@@ -20,19 +20,43 @@ public class PainelEsquerdo extends JPanel{
         JLayeredPane camadaDisco = criarCamadaDisco();
         camadaDisco.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        musica = new JLabel("Nenhuma música");
-        musica.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel caixaInfo = criarCaixaInfo();
+        caixaInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        artista = new JLabel("Nenhum artista");
-        artista.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        add(musica);
-        add(artista);
-        add(camadaDisco);
         add(Box.createVerticalStrut(30));
-        add(Box.createVerticalStrut(20));
+        add(camadaDisco);
+        add(Box.createVerticalStrut(15));
+        add(caixaInfo);
 
         criarVolume();
+    }
+
+    private JPanel criarCaixaInfo() {
+
+        JPanel caixa = new JPanel();
+        caixa.setLayout(new BoxLayout(caixa, BoxLayout.Y_AXIS));
+        caixa.setBackground(CAIXA_FUNDO);
+        caixa.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(TEXTO, 2),
+                BorderFactory.createEmptyBorder(10, 15, 10, 15)
+        ));
+        caixa.setAlignmentX(Component.CENTER_ALIGNMENT);
+        caixa.setMaximumSize(new Dimension(360, 70));
+
+        musica = new JLabel("Nenhuma música");
+        musica.setAlignmentX(Component.LEFT_ALIGNMENT);
+        musica.setForeground(NEON_VERDE);
+        musica.setFont(FontePixel.obter(9));
+
+        artista = new JLabel("Nenhum artista");
+        artista.setAlignmentX(Component.LEFT_ALIGNMENT);
+        artista.setForeground(NEON_AZUL);
+        artista.setFont(FontePixel.obter(9));
+
+        caixa.add(musica);
+        caixa.add(artista);
+
+        return caixa;
     }
 
     @Override
@@ -66,17 +90,21 @@ public class PainelEsquerdo extends JPanel{
 
         JPanel painelVolume = new JPanel(new BorderLayout());
         painelVolume.setBackground(FUNDO);
+        painelVolume.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(TEXTO, 2),
+                BorderFactory.createEmptyBorder(10, 15, 10, 15)
+        ));
 
         JPanel linhaTopo = new JPanel(new BorderLayout());
         linhaTopo.setBackground(FUNDO);
 
         JLabel texto = new JLabel("VOL");
         texto.setForeground(TEXTO);
-        texto.setFont(new Font("Consolas", Font.BOLD, 12));
+        texto.setFont(FontePixel.obter(12));
 
         JLabel valorLabel = new JLabel("70");
         valorLabel.setForeground(TEXTO);
-        valorLabel.setFont(new Font("Consolas", Font.BOLD, 12));
+        valorLabel.setFont(FontePixel.obter(12));
 
         linhaTopo.add(texto, BorderLayout.WEST);
         linhaTopo.add(valorLabel, BorderLayout.EAST);
@@ -94,7 +122,6 @@ public class PainelEsquerdo extends JPanel{
 
         painelVolume.add(linhaTopo, BorderLayout.NORTH);
         painelVolume.add(wrapper, BorderLayout.CENTER);
-        painelVolume.setBorder(BorderFactory.createEmptyBorder(10, 15, 10,15));
 
         add(painelVolume);
     }
@@ -121,6 +148,13 @@ public class PainelEsquerdo extends JPanel{
         return camada;
     }
 
+    public void atualizarInfo(String nomeMusica, String nomeArtista) {
+        musica.setText(nomeMusica != null ? nomeMusica : "Nenhuma música");
+        musica.setFont(FontePixel.obter(10));
+        artista.setText(nomeArtista != null ? nomeArtista : "Nenhum artista");
+        artista.setFont(FontePixel.obter(10));
+    }
+
     private Janela janela;
 
     private PainelImagem capa;
@@ -134,6 +168,9 @@ public class PainelEsquerdo extends JPanel{
     private static final Color PAINEL = new Color(18, 27, 46);
     private static final Color FUNDO = new Color(14, 20, 34);
     private static final Color TEXTO = new Color(0 , 255, 170);
+    private static final Color CAIXA_FUNDO = new Color(10, 25, 15, 220);
+    private static final Color NEON_VERDE = new Color(0, 255,130);
+    private static final Color NEON_AZUL = new Color(80, 190,255);
 
     private Image fundoImagem;
 }
