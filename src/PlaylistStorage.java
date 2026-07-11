@@ -1,3 +1,5 @@
+import modelo.Musica;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -47,5 +49,9 @@ public class PlaylistStorage {
         }
 
         return caminhos;
+    }
+
+    public void setVolume(int volume) {
+
     }
 }

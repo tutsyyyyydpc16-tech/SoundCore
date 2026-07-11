@@ -1,12 +1,11 @@
-import javafx.embed.swing.JFXPanel;
+package player;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.awt.event.MouseEvent;
 import java.io.File;
 import javafx.util.Duration;
-
-import javax.swing.*;
+import modelo.Musica;
 
 public class Player {
 

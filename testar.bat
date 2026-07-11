@@ -1,0 +1,2 @@
+"C:\Program Files\Java\jdk-26\bin\java" --module-path "C:\Users\emers\Downloads\javafx-sdk-26.0.1\lib" --add-modules javafx.controls,javafx.media,javafx.swing -cp "SoundCore.jar;C:\Users\emers\Downloads\javafx-sdk-26.0.1\lib\jaudiotagger-3.0.1.jar" Main
+pause

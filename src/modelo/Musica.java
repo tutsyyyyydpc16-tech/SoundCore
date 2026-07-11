@@ -1,3 +1,5 @@
+package modelo;
+
 public class Musica {
 
     private String nome;

@@ -1,3 +1,4 @@
+import app.Janela;
 import javafx.application.Platform;
 
 import javax.swing.*;
