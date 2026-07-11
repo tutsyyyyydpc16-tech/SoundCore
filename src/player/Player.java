@@ -128,6 +128,8 @@ public class Player {
     }
 
     public void setVolume(double volume) {
+
+        this.volumeAtual = volume;
         if (player != null) {
             player.setVolume(volume);
         }

@@ -234,7 +234,7 @@ public class Janela extends JFrame {
     }
 
     public void alterarVolume(int valor) {
-        reprodutor.setVolume(valor);
+        reprodutor.setVolume(valor / 100.0);
     }
 
     private Player reprodutor = new Player();

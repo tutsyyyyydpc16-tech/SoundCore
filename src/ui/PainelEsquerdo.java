@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class PainelEsquerdo extends JPanel{
 
-    public PainelEsquerdo() {
+    public PainelEsquerdo(Janela janela) {
 
         this.janela = janela;
 
@@ -46,20 +46,35 @@ public class PainelEsquerdo extends JPanel{
         JPanel painelVolume = new JPanel(new BorderLayout());
         painelVolume.setBackground(FUNDO);
 
+        JPanel linhaTopo = new JPanel(new BorderLayout());
+        linhaTopo.setBackground(FUNDO);
+
         JLabel texto = new JLabel("VOL");
         texto.setForeground(TEXTO);
+        texto.setFont(new Font("Consolas", Font.BOLD, 12));
 
-        volume = new JSlider(0, 100, 70);
+        JLabel valorLabel = new JLabel("70");
+        valorLabel.setForeground(TEXTO);
+        valorLabel.setFont(new Font("Consolas", Font.BOLD, 12));
 
-        painelVolume.add(texto, BorderLayout.NORTH);
-        painelVolume.add(volume, BorderLayout.CENTER);
+        linhaTopo.add(texto, BorderLayout.WEST);
+        linhaTopo.add(valorLabel, BorderLayout.EAST);
 
-        volume.addChangeListener(e -> {
-            janela.alterarVolume(volume.getValue());
+        volumeBarras = new VolumeBarras();
+        volumeBarras.setAoMudar(v -> {
+            valorLabel.setText(String.valueOf(v));
+            janela.alterarVolume(v);
         });
 
-        add(painelVolume, BorderLayout.SOUTH);
+        JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
+        wrapper.setBackground(FUNDO);
+        wrapper.add(volumeBarras);
 
+        painelVolume.add(linhaTopo, BorderLayout.NORTH);
+        painelVolume.add(wrapper, BorderLayout.CENTER);
+        painelVolume.setBorder(BorderFactory.createEmptyBorder(10, 15, 10,15));
+
+        add(painelVolume);
     }
 
     private Janela janela;
@@ -68,7 +83,7 @@ public class PainelEsquerdo extends JPanel{
     private JLabel artista;
     private JLabel disco;
 
-    private JSlider volume;
+    private VolumeBarras volumeBarras;
 
     private static final Color PAINEL = new Color(18, 27, 46);
     private static final Color FUNDO = new Color(14, 20, 34);

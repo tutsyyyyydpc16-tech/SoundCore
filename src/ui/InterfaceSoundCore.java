@@ -16,7 +16,7 @@ public class InterfaceSoundCore extends JPanel {
 
         setLayout(new BorderLayout());
 
-        add(new PainelEsquerdo(), BorderLayout.WEST);
+        add(new PainelEsquerdo(janela), BorderLayout.WEST);
         painelDireito = new PainelDireito(janela);
 
         add(painelDireito, BorderLayout.CENTER);
