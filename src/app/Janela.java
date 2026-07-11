@@ -1,5 +1,6 @@
 package app;
 
+import java.util.List;
 import modelo.Musica;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -13,6 +14,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class Janela extends JFrame {
@@ -73,7 +75,7 @@ public class Janela extends JFrame {
 
     private void carregarPlaylistSalva() {
 
-        /*List<String> caminhos = storage.carregar();
+        List<String> caminhos = storage.carregar();
 
         for (String caminho : caminhos) {
 
@@ -81,15 +83,13 @@ public class Janela extends JFrame {
             Musica m = new Musica(arquivo.getName(), caminho);
             lerMetadados(m);
 
-            ui.getPainelDireito()
-                    .getPlaylistModel()
-                    .addElement(m);
-        }*/
+            ui.getPainelDireito().adicionarMusica(m);
+        }
     }
 
     private void salvarPlaylistAtual() {
 
-        /*List<Musica> todas = new ArrayList<>();
+        List<Musica> todas = new ArrayList<>();
 
         DefaultListModel<Musica> lista =
                 ui.getPainelDireito().getPlaylistModel();
@@ -98,7 +98,7 @@ public class Janela extends JFrame {
             todas.add(lista.getElementAt(i));
         }
 
-        storage.salvar(todas);*/
+        storage.salvar(todas);
     }
 
     public void AbrirMusica() {
@@ -244,7 +244,7 @@ public class Janela extends JFrame {
     }
 
     private Player reprodutor = new Player();
-    //private PlaylistStorage storage = new PlaylistStorage();
+    private app.PlaylistStorage storage = new app.PlaylistStorage();
     private InterfaceSoundCore ui;
     private Musica musicaAtual;
     private boolean arrastando = false;

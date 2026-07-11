@@ -1,3 +1,5 @@
+package app;
+
 import modelo.Musica;
 
 import java.io.File;
@@ -51,7 +53,4 @@ public class PlaylistStorage {
         return caminhos;
     }
 
-    public void setVolume(int volume) {
-
-    }
 }

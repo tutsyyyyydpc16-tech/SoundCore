@@ -10,37 +10,36 @@ public class RenderizadorMusica extends JLabel implements ListCellRenderer<Music
     public RenderizadorMusica() {
 
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(6, 0,6,15));
 
+        barraLateral.setOpaque(true);
         barraLateral.setPreferredSize(new Dimension(4,0));
 
-        JPanel linhaTopo = new JPanel(new BorderLayout());
-        linhaTopo.setOpaque(false);
-
-        JPanel numeroETitulo = new JPanel(new FlowLayout(FlowLayout.LEFT,8,0));
-        numeroETitulo.setOpaque(false);
-
         numero.setFont(FontePixel.obter(8));
-        titulo.setFont(FontePixel.obter(9));
+        numero.setHorizontalAlignment(SwingConstants.CENTER);
+        numero.setPreferredSize(new Dimension(35, 0));
 
-        numeroETitulo.add(numero);
-        numeroETitulo.add(titulo);
+        titulo.setFont(FontePixel.obter(9));
+        artista.setFont(FontePixel.obter(7));
+
+        JPanel textoCentral = new JPanel();
+        textoCentral.setLayout(new BoxLayout(textoCentral, BoxLayout.Y_AXIS));
+        textoCentral.setOpaque(false);
+        titulo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        artista.setAlignmentX(Component.LEFT_ALIGNMENT);
+        textoCentral.add(titulo);
+        textoCentral.add(artista);
 
         tempo.setFont(FontePixel.obter(8));
         tempo.setHorizontalAlignment(SwingConstants.RIGHT);
+        tempo.setPreferredSize(new Dimension(55, 0));
+        tempo.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
 
-        linhaTopo.add(numeroETitulo, BorderLayout.WEST);
-        linhaTopo.add(tempo, BorderLayout.EAST);
-
-        artista.setFont(FontePixel.obter(7));
-        artista.setBorder(BorderFactory.createEmptyBorder(4,30,0,0));
-
-        JPanel conteudo = new JPanel();
-        conteudo.setLayout(new BoxLayout(conteudo, BoxLayout.Y_AXIS));
+        JPanel conteudo = new JPanel(new BorderLayout());
         conteudo.setOpaque(false);
-        conteudo.add(linhaTopo);
-        conteudo.add(artista);
-        conteudo.setBorder(BorderFactory.createEmptyBorder(0,12,0,0));
+        conteudo.add(numero, BorderLayout.WEST);
+        conteudo.add(textoCentral, BorderLayout.CENTER);
+        conteudo.add(tempo, BorderLayout.EAST);
+        conteudo.setBorder(BorderFactory.createEmptyBorder(8,0,8,0));
 
         add(barraLateral, BorderLayout.WEST);
         add(conteudo, BorderLayout.CENTER);
@@ -61,8 +60,8 @@ public class RenderizadorMusica extends JLabel implements ListCellRenderer<Music
 
         Color fundo = isSelected ? FUNDO_SELECIONADO : FUNDO;
 
+        setOpaque(true);
         setBackground(fundo);
-        conteudoDefinirFundo(fundo);
 
         titulo.setForeground(isSelected ? TITULO_SELECIONADO : Color.WHITE);
         numero.setForeground(NUMERO_COR);
@@ -71,12 +70,9 @@ public class RenderizadorMusica extends JLabel implements ListCellRenderer<Music
 
         barraLateral.setBackground(isSelected ? BARRA_SELECAO : fundo);
 
-        return this;
-    }
+        setBorder(BorderFactory.createMatteBorder(1,0,1,0, BORDA_SEPARADOR));
 
-    private void conteudoDefinirFundo(Color cor) {
-        setOpaque(true);
-        setBackground(cor);
+        return this;
     }
 
     private String formatarTempo(int segundosTotais) {
@@ -95,6 +91,7 @@ public class RenderizadorMusica extends JLabel implements ListCellRenderer<Music
     private static final Color NUMERO_COR = new Color(120, 130, 145);
     private static final Color TEMPO_COR = new Color(150,160,175);
     private static final Color BARRA_SELECAO = new Color(0,255,170);
+    private static final Color BORDA_SEPARADOR = new Color(30,40,55);
 
     private final JLabel numero = new JLabel();
     private final JLabel titulo = new JLabel();
