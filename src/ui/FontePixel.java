@@ -19,5 +19,5 @@ public class FontePixel {
         }
     }
 
-    private static Font fonteBase;
+    public static Font fonteBase;
 }

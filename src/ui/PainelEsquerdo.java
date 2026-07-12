@@ -96,7 +96,7 @@ public class PainelEsquerdo extends JPanel{
         painelEqualizer.add(Box.createVerticalStrut(6));
         painelEqualizer.add(equalizer);
         painelEqualizer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        painelEqualizer.setMaximumSize(new Dimension(350, 70));
+        painelEqualizer.setMaximumSize(new Dimension(360, 70));
 
         add(painelEqualizer);
     }
@@ -108,6 +108,7 @@ public class PainelEsquerdo extends JPanel{
         if (bytesCapa != null) {
             ImageIcon icone = new ImageIcon(bytesCapa);
             capa.setImagem(icone.getImage());
+            capa.setBorder(BorderFactory.createLineBorder(TEXTO,2));
             System.out.println("Tamanho da capa (label): " + capa.getWidth() + "x" + capa.getHeight());
             System.out.println("Tamanho da imagem original: " + icone.getIconWidth() + "x" + icone.getIconHeight());
         }

@@ -8,6 +8,7 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.images.Artwork;
 import player.Player;
+import ui.BarraTitulo;
 import ui.EqualizerBarras;
 import ui.InterfaceSoundCore;
 
@@ -23,15 +24,23 @@ public class Janela extends JFrame {
     public Janela() {
 
         setTitle("SoundCore");
+        setUndecorated(true);
         setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         DefinirIcone();
 
-        InterfaceSoundCore ui = new InterfaceSoundCore(this);
+        JPanel raiz = new JPanel(new BorderLayout());
+        raiz.setBackground(Color.BLACK);
 
-        add(ui);
+        BarraTitulo barraTitulo = new BarraTitulo(this);
+        raiz.add(barraTitulo, BorderLayout.NORTH);
+
+        InterfaceSoundCore ui = new InterfaceSoundCore(this);
+        raiz.add(ui, BorderLayout.CENTER);
+
+        add(raiz);
 
         this.ui = ui;
 
