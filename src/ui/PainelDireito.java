@@ -37,19 +37,26 @@ public class PainelDireito extends JPanel {
         playIcon = carregarIcon("Resource/Play.png", 100, 50);
         pauseIcon = carregarIcon("Resource/Pause.png", 100, 50);
 
+        JButton modoAleatorio = criarBotao("Resource/AleatorioMusica.png", 20, 20);
         JButton adicionar = criarBotao("Resource/AdicionarMusica.png", 25, 25);
         JButton retrocederMusica = criarBotao("Resource/RetrocederMusica.png", 48, 28);
         JButton atrasarMusica = criarBotao("Resource/AtrasarMusica.png", 54, 34);
         play = criarBotao("Resource/Play.png", 100, 50);
         JButton seguinte = criarBotao("Resource/AdiantarMusica.png", 54, 34);
         JButton avancarMusica = criarBotao("Resource/AvancarMusica.png", 48, 28);
+        JButton repetirMusica = criarBotao("Resource/RepetirMusica.png", 20, 20);
 
+        botaoAleatorio = modoAleatorio;
+        botaoRepetir = repetirMusica;
+
+        controles.add(modoAleatorio);
         controles.add(adicionar);
         controles.add(retrocederMusica);
         controles.add(atrasarMusica);
         controles.add(play);
         controles.add(seguinte);
         controles.add(avancarMusica);
+        controles.add(repetirMusica);
 
         adicionar.addActionListener(e -> janela.AbrirMusica());
         retrocederMusica.addActionListener(e -> janela.tocarAnterior());
@@ -57,6 +64,8 @@ public class PainelDireito extends JPanel {
         play.addActionListener(e -> janela.alternarPlayPause());
         seguinte.addActionListener(e -> janela.adiantarMusica());
         avancarMusica.addActionListener(e -> janela.tocarProxima());
+        modoAleatorio.addActionListener(e -> janela.alternarAleatorio());
+        repetirMusica.addActionListener(e -> janela.alternarRepetir());
 
         configurarBarraProgresso();
 
@@ -299,9 +308,31 @@ public class PainelDireito extends JPanel {
         return String.format("%d:%02d", minutos, segundos);
     }
 
+    public void atualizarEstadoRepeat(boolean ativo) {
+        aplicarEstadoBotao(botaoRepetir, ativo);
+    }
+
+    public void atualizarEstadoShuffle(boolean ativo) {
+        aplicarEstadoBotao(botaoAleatorio, ativo);
+    }
+
+    private void aplicarEstadoBotao(JButton botao, boolean ativo) {
+
+        if (ativo) {
+            botao.setBorderPainted(true);
+            botao.setBorder(BorderFactory.createLineBorder(NEON_VERDE, 2, true));
+        }
+        else {
+            botao.setBorderPainted(false);
+            botao.setBorder(null);
+        }
+    }
+
     private Janela janela;
 
     private JButton play;
+    private JButton botaoAleatorio;
+    private JButton botaoRepetir;
 
     private DefaultListModel<Musica> playlistModel;
     private JList<Musica> listaPlaylist;

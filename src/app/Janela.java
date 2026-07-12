@@ -147,22 +147,45 @@ public class Janela extends JFrame {
     public void tocarProxima() {
 
         JList<Musica> lista = ui.getPainelDireito().getListaPlaylist();
+        int tamanho = lista.getModel().getSize();
 
-        int indice = lista.getSelectedIndex();
-
-        if (indice == -1) {
+        if (tamanho == 0) {
             return;
         }
 
-        if (indice < lista.getModel().getSize() -1) {
-            indice++;
+        if (repetirAtual) {
+            tocarMusica(musicaAtual);
+            return;
+        }
+
+        int indice;
+
+        if (modoAleatorio) {
+
+            int indiceAtual = lista.getSelectedIndex();
+            java.util.Random random = new java.util.Random();
+
+            do {
+                indice = random.nextInt(tamanho);
+            } while (tamanho > 1 && indice == indiceAtual);
         }
         else {
-            indice = 0;
+
+            int indiceAtual = lista.getSelectedIndex();
+
+            if (indiceAtual == -1) {
+                return;
+            }
+
+            if (indiceAtual < tamanho -1) {
+                indice = indiceAtual + 1;
+            }
+            else {
+                indice = 0;
+            }
         }
 
         lista.setSelectedIndex(indice);
-
         tocarMusica(lista.getSelectedValue());
     }
 
@@ -243,10 +266,23 @@ public class Janela extends JFrame {
         reprodutor.setVolume(valor / 100.0);
     }
 
+    public void alternarRepetir() {
+        repetirAtual = !repetirAtual;
+        ui.getPainelDireito().atualizarEstadoRepeat(repetirAtual);
+
+    }
+
+    public void alternarAleatorio() {
+        modoAleatorio = !modoAleatorio;
+        ui.getPainelDireito().atualizarEstadoShuffle(modoAleatorio);
+    }
+
     private Player reprodutor = new Player();
     private app.PlaylistStorage storage = new app.PlaylistStorage();
     private InterfaceSoundCore ui;
     private Musica musicaAtual;
-    private boolean arrastando = false;
 
+    private boolean arrastando = false;
+    private boolean repetirAtual = false;
+    private boolean modoAleatorio = false;
 }
