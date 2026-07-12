@@ -28,10 +28,14 @@ public class PainelEsquerdo extends JPanel{
         add(Box.createVerticalStrut(15));
         add(caixaInfo);
 
+        Equalizer();
         criarVolume();
+
+        revalidate();
+        repaint();
     }
 
-    private JPanel criarCaixaInfo() {
+    public JPanel criarCaixaInfo() {
 
         JPanel caixa = new JPanel();
         caixa.setLayout(new BoxLayout(caixa, BoxLayout.Y_AXIS));
@@ -69,6 +73,32 @@ public class PainelEsquerdo extends JPanel{
             g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
             g2.drawImage(fundoImagem, 0, 0, getWidth(), getHeight(), this);
         }
+    }
+
+    public void Equalizer() {
+
+        JLabel labelEqualizer = new JLabel("EQUALIZER");
+        labelEqualizer.setForeground(TEXTO_SECUNDARIO);
+        labelEqualizer. setFont(FontePixel.obter(7));
+        labelEqualizer.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        equalizer = new EqualizerBarras();
+        equalizer.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel painelEqualizer = new JPanel();
+        painelEqualizer.setLayout(new BoxLayout(painelEqualizer, BoxLayout.Y_AXIS));
+        painelEqualizer.setBackground(CAIXA_FUNDO);
+        painelEqualizer.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(0,2,2,2, TEXTO),
+                BorderFactory.createEmptyBorder(8,15,8,15)
+        ));
+        painelEqualizer.add(labelEqualizer);
+        painelEqualizer.add(Box.createVerticalStrut(6));
+        painelEqualizer.add(equalizer);
+        painelEqualizer.setAlignmentX(Component.CENTER_ALIGNMENT);
+        painelEqualizer.setMaximumSize(new Dimension(350, 70));
+
+        add(painelEqualizer);
     }
 
     public void atualizarCapa(byte[] bytesCapa) {
@@ -155,6 +185,10 @@ public class PainelEsquerdo extends JPanel{
         artista.setFont(FontePixel.obter(10));
     }
 
+    public EqualizerBarras getEqualizer() {
+        return equalizer;
+    }
+
     private Janela janela;
 
     private PainelImagem capa;
@@ -171,6 +205,9 @@ public class PainelEsquerdo extends JPanel{
     private static final Color CAIXA_FUNDO = new Color(10, 25, 15, 220);
     private static final Color NEON_VERDE = new Color(0, 255,130);
     private static final Color NEON_AZUL = new Color(80, 190,255);
+    private static final Color TEXTO_SECUNDARIO = new Color(150,160,175);
 
     private Image fundoImagem;
+
+    private EqualizerBarras equalizer;
 }

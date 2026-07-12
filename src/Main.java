@@ -10,6 +10,8 @@ public class Main {
         Platform.startup(() -> {});
         Platform.setImplicitExit(false);
 
+        //RepaintManager.currentManager(null).setDoubleBufferingEnabled(false);
+
         SwingUtilities.invokeLater(Janela::new);
     }
 }

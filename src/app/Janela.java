@@ -8,6 +8,7 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.images.Artwork;
 import player.Player;
+import ui.EqualizerBarras;
 import ui.InterfaceSoundCore;
 
 import javax.swing.*;
@@ -56,6 +57,14 @@ public class Janela extends JFrame {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 salvarPlaylistAtual();
                 System.exit(0);
+            }
+        });
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                repaint();
             }
         });
 
@@ -136,11 +145,12 @@ public class Janela extends JFrame {
         if (reprodutor.tocando()) {
             reprodutor.pausar();
             ui.getPainelDireito().atualizarBotaoPlay(false);
+            ui.getPainelEsquerdo().getEqualizer().setAtivo(false);
         }
         else {
             reprodutor.continuar();
             ui.getPainelDireito().atualizarBotaoPlay(true);
-
+            ui.getPainelEsquerdo().getEqualizer().setAtivo(true);
         }
     }
 
@@ -245,6 +255,7 @@ public class Janela extends JFrame {
         ui.getPainelDireito().atualizarBotaoPlay(true);
         ui.getPainelEsquerdo().atualizarCapa(musica.getCapa());
         ui.getPainelEsquerdo().atualizarInfo(musica.getNome(), musica.getArtista());
+        ui.getPainelEsquerdo().getEqualizer().setAtivo(true);
     }
     public void adiantarMusica() {
         reprodutor.avancar(10);
