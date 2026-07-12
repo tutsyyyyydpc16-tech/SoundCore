@@ -187,6 +187,11 @@ public class PainelDireito extends JPanel {
 
         JButton remover = new JButton("- Música");
         remover.addActionListener(e -> removerSelecionado());
+        remover.setFont(FontePixel.obter(9));
+        remover.setForeground(new Color(255, 90,90));
+        remover.setBackground(PAINEL);
+        remover.setFocusPainted(false);
+        remover.setBorder(BorderFactory.createMatteBorder(2,0,0,0, BORDA));
 
         JPanel baixo = new JPanel(new BorderLayout());
         baixo.add(scroll,BorderLayout.CENTER);
