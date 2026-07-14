@@ -156,11 +156,13 @@ public class Janela extends JFrame {
             reprodutor.pausar();
             ui.getPainelDireito().atualizarBotaoPlay(false);
             ui.getPainelEsquerdo().getEqualizer().setAtivo(false);
+            ui.getPainelEsquerdo().getDisco().pararAnimacao();
         }
         else {
             reprodutor.continuar();
             ui.getPainelDireito().atualizarBotaoPlay(true);
             ui.getPainelEsquerdo().getEqualizer().setAtivo(true);
+            ui.getPainelEsquerdo().getDisco().iniciarAnimacao();
         }
     }
 
@@ -266,6 +268,7 @@ public class Janela extends JFrame {
         ui.getPainelEsquerdo().atualizarCapa(musica.getCapa());
         ui.getPainelEsquerdo().atualizarInfo(musica.getNome(), musica.getArtista());
         ui.getPainelEsquerdo().getEqualizer().setAtivo(true);
+        ui.getPainelEsquerdo().getDisco().iniciarAnimacao();
     }
     public void adiantarMusica() {
         reprodutor.avancar(10);

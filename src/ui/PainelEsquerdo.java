@@ -109,6 +109,8 @@ public class PainelEsquerdo extends JPanel{
         if (bytesCapa != null) {
             ImageIcon icone = new ImageIcon(bytesCapa);
             capa.setImagem(icone.getImage());
+            capa.revalidate();
+            capa.repaint();
             System.out.println("Tamanho da capa (label): " + capa.getWidth() + "x" + capa.getHeight());
             System.out.println("Tamanho da imagem original: " + icone.getIconWidth() + "x" + icone.getIconHeight());
         }
@@ -191,7 +193,7 @@ public class PainelEsquerdo extends JPanel{
         Image imagemDisco = new ImageIcon("Resource/Disco.png").getImage();
         Image discoEscalado = imagemDisco.getScaledInstance(TAMANHO, TAMANHO, Image.SCALE_SMOOTH);
 
-        disco = new JLabel(new ImageIcon(discoEscalado));
+        disco = new PainelDisco(discoEscalado);
         disco.setBounds(0, 0, TAMANHO, TAMANHO);
         camada.add(disco, Integer.valueOf(1));
 
@@ -205,6 +207,10 @@ public class PainelEsquerdo extends JPanel{
         artista.setFont(FontePixel.obter(10));
     }
 
+    public PainelDisco getDisco() {
+        return disco;
+    }
+
     public EqualizerBarras getEqualizer() {
         return equalizer;
     }
@@ -215,7 +221,6 @@ public class PainelEsquerdo extends JPanel{
 
     private JLabel musica;
     private JLabel artista;
-    private JLabel disco;
 
     private VolumeBarras volumeBarras;
 
@@ -230,4 +235,6 @@ public class PainelEsquerdo extends JPanel{
     private Image fundoImagem;
 
     private EqualizerBarras equalizer;
+
+    private PainelDisco disco;
 }
