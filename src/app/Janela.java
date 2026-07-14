@@ -9,7 +9,6 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.images.Artwork;
 import player.Player;
 import ui.BarraTitulo;
-import ui.EqualizerBarras;
 import ui.InterfaceSoundCore;
 
 import javax.swing.*;
@@ -59,12 +58,14 @@ public class Janela extends JFrame {
         }));
 
         carregarPlaylistSalva();
+        carregarBibliotecaSalva();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
 
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 salvarPlaylistAtual();
+                salvarBibliotecaAtual();
                 System.exit(0);
             }
         });
@@ -297,6 +298,92 @@ public class Janela extends JFrame {
         ui.getPainelDireito().atualizarEstadoShuffle(modoAleatorio);
     }
 
+    public void abrirBiblioteca() {
+        ui.mostrarBiblioteca();
+    }
+
+    public void voltarAoPlayer() {
+        ui.mostrarPlayer();
+    }
+
+    public void AbrirMusicaNaBiblioteca() {
+
+        JFileChooser musicas = new JFileChooser();
+        musicas.setCurrentDirectory(new File("."));
+
+        FileNameExtensionFilter filtros = new FileNameExtensionFilter("Músicas (*.mp3)", "mp3");
+        musicas.setFileFilter(filtros);
+        musicas.setAcceptAllFileFilterUsed(false);
+
+        int result = musicas.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+
+            Musica nova = new Musica(
+                    musicas.getSelectedFile().getName(),
+                    musicas.getSelectedFile().getPath()
+            );
+
+            lerMetadados(nova);
+
+            ui.getPainelBiblioteca().adicionarMusica(nova);
+        }
+    }
+
+    public void adicionarAPlaylist(Musica musica) {
+
+        System.out.println("Entrou no método");
+
+        DefaultListModel<Musica> playlist = ui.getPainelDireito().getPlaylistModel();
+
+        for (int i = 0; i < playlist.size(); i++) {
+            if (playlist.getElementAt(i).getCaminho().equals(musica.getCaminho())) {
+                return;
+            }
+        }
+        ui.getPainelDireito().adicionarMusica(musica);
+    }
+
+    private void carregarBibliotecaSalva() {
+
+        List<String> caminhos = bibliotecaStorage.carregar();
+
+        for (String caminho : caminhos) {
+
+            File arquivo = new File(caminho);
+            Musica m = new Musica(arquivo.getName(), caminho);
+            lerMetadados(m);
+
+            ui.getPainelBiblioteca().adicionarMusica(m);
+        }
+    }
+
+    private void salvarBibliotecaAtual() {
+
+        List<Musica> todas = new ArrayList<>();
+
+        DefaultListModel<Musica> lista = ui.getPainelBiblioteca().getBibliotecaModel();
+
+        for (int i = 0; i < lista.size(); i++) {
+            todas.add(lista.getElementAt(i));
+        }
+
+        bibliotecaStorage.salvar(todas);
+    }
+
+    public boolean estaNaPlaylist(Musica musica) {
+
+        DefaultListModel<Musica> playlist = ui.getPainelDireito().getPlaylistModel();
+
+        for (int i = 0; i < playlist.size(); i++) {
+            if (playlist.getElementAt(i).getCaminho().equals(musica.getCaminho())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private Player reprodutor = new Player();
     private app.PlaylistStorage storage = new app.PlaylistStorage();
     private InterfaceSoundCore ui;
@@ -305,4 +392,6 @@ public class Janela extends JFrame {
     private boolean arrastando = false;
     private boolean repetirAtual = false;
     private boolean modoAleatorio = false;
+
+    private BibliotecaStorage bibliotecaStorage = new BibliotecaStorage();
 }

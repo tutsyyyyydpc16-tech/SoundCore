@@ -14,6 +14,7 @@ public class PainelEsquerdo extends JPanel{
 
         setPreferredSize(new Dimension(350, 0));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(BorderFactory.createLineBorder(TEXTO, 2));
 
         fundoImagem = new ImageIcon("Resource/FundoCapa.png").getImage();
 
@@ -108,7 +109,6 @@ public class PainelEsquerdo extends JPanel{
         if (bytesCapa != null) {
             ImageIcon icone = new ImageIcon(bytesCapa);
             capa.setImagem(icone.getImage());
-            capa.setBorder(BorderFactory.createLineBorder(TEXTO,2));
             System.out.println("Tamanho da capa (label): " + capa.getWidth() + "x" + capa.getHeight());
             System.out.println("Tamanho da imagem original: " + icone.getIconWidth() + "x" + icone.getIconHeight());
         }
@@ -155,6 +155,25 @@ public class PainelEsquerdo extends JPanel{
         painelVolume.add(wrapper, BorderLayout.CENTER);
 
         add(painelVolume);
+
+        add(criarBotaoBiblioteca());
+    }
+
+    private JButton criarBotaoBiblioteca() {
+
+        JButton botao = new JButton("BIBLIOTECA");
+        botao.setFont(FontePixel.obter(9));
+        botao.setForeground(TEXTO);
+        botao.setBackground(new Color(18,27,46));
+        botao.setBorderPainted(true);
+        botao.setBorder(BorderFactory.createMatteBorder(0,2,2,2,TEXTO));
+        botao.setFocusPainted(false);
+        botao.setAlignmentX(Component.CENTER_ALIGNMENT);
+        botao.setMaximumSize(new Dimension(350,40));
+
+        botao.addActionListener(e -> janela.abrirBiblioteca());
+
+        return botao;
     }
 
     private JLayeredPane criarCamadaDisco() {

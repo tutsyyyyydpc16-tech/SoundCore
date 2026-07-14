@@ -38,7 +38,6 @@ public class PainelDireito extends JPanel {
         pauseIcon = carregarIcon("Resource/Pause.png", 100, 50);
 
         JButton modoAleatorio = criarBotao("Resource/AleatorioMusica.png", 20, 20);
-        JButton adicionar = criarBotao("Resource/AdicionarMusica.png", 25, 25);
         JButton retrocederMusica = criarBotao("Resource/RetrocederMusica.png", 48, 28);
         JButton atrasarMusica = criarBotao("Resource/AtrasarMusica.png", 54, 34);
         play = criarBotao("Resource/Play.png", 100, 50);
@@ -50,7 +49,6 @@ public class PainelDireito extends JPanel {
         botaoRepetir = repetirMusica;
 
         controles.add(modoAleatorio);
-        controles.add(adicionar);
         controles.add(retrocederMusica);
         controles.add(atrasarMusica);
         controles.add(play);
@@ -58,7 +56,6 @@ public class PainelDireito extends JPanel {
         controles.add(avancarMusica);
         controles.add(repetirMusica);
 
-        adicionar.addActionListener(e -> janela.AbrirMusica());
         retrocederMusica.addActionListener(e -> janela.tocarAnterior());
         atrasarMusica.addActionListener(e -> janela.atrasarMusica());
         play.addActionListener(e -> janela.alternarPlayPause());
@@ -264,7 +261,7 @@ public class PainelDireito extends JPanel {
         });
     }
 
-    private JButton criarBotao(String caminho, int largura, int altura) {
+    public JButton criarBotao(String caminho, int largura, int altura) {
 
         ImageIcon icon = carregarIcon(caminho, largura, altura);
 
