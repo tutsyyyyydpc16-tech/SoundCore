@@ -7,6 +7,12 @@ public class Musica {
     private byte[] capa;
 
     public Musica(String nome, String caminho) {
+
+        int ponto = nome.lastIndexOf(".");
+
+        if (ponto != -1) {
+            nome = nome.substring(0, ponto);
+        }
         this.nome = nome;
         this.caminho = caminho;
     }
