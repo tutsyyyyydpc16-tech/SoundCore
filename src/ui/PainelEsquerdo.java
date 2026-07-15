@@ -32,6 +32,8 @@ public class PainelEsquerdo extends JPanel{
         Equalizer();
         criarVolume();
 
+        //add(Box.createVerticalGlue());
+
         revalidate();
         repaint();
     }
@@ -123,6 +125,7 @@ public class PainelEsquerdo extends JPanel{
 
         JPanel painelVolume = new JPanel(new BorderLayout());
         painelVolume.setBackground(FUNDO);
+        painelVolume.setMaximumSize(new Dimension(360, 100));
         painelVolume.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(TEXTO, 2),
                 BorderFactory.createEmptyBorder(10, 15, 10, 15)
@@ -170,8 +173,10 @@ public class PainelEsquerdo extends JPanel{
         botao.setBorderPainted(true);
         botao.setBorder(BorderFactory.createMatteBorder(0,2,2,2,TEXTO));
         botao.setFocusPainted(false);
+        botao.setOpaque(true);
+        botao.setMargin(new Insets(0,0,0,0));
         botao.setAlignmentX(Component.CENTER_ALIGNMENT);
-        botao.setMaximumSize(new Dimension(350,40));
+        botao.setMaximumSize(new Dimension(350,30));
         botao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         botao.addActionListener(e -> janela.abrirBiblioteca());
