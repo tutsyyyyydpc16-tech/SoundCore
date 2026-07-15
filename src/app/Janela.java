@@ -249,6 +249,9 @@ public class Janela extends JFrame {
                 if (artwork != null) {
                     m.setCapa(artwork.getBinaryData());
                 }
+                System.out.println("Título: " + tag.getFirst(FieldKey.TITLE));
+                System.out.println("Artista: " + tag.getFirst(FieldKey.ARTIST));
+                System.out.println("Álbum: " + tag.getFirst(FieldKey.ALBUM));
 
                 String nomeArtista = tag.getFirst(FieldKey.ARTIST);
                 if (nomeArtista != null && !nomeArtista.isEmpty()) {

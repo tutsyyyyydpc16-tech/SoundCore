@@ -12,6 +12,7 @@ public class VolumeBarras extends JComponent {
 
         setPreferredSize(new Dimension(TOTAL_BARRAS * (LARGURA_BARRA + ESPACO_BARRA), ALTURA_MAX));
         setOpaque(false);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         MouseAdapter arraste = new MouseAdapter() {
             @Override

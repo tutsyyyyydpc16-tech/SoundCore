@@ -23,7 +23,9 @@ public class BarraTitulo extends JPanel {
         botoes.setOpaque(false);
 
         JButton minimizar = criarBotao("_");
+        minimizar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         JButton fechar = criarBotao("X");
+        fechar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         minimizar.addActionListener(e -> janela.setState(Frame.ICONIFIED));
         fechar.addActionListener(e -> {

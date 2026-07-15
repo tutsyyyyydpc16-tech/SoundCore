@@ -172,6 +172,7 @@ public class PainelEsquerdo extends JPanel{
         botao.setFocusPainted(false);
         botao.setAlignmentX(Component.CENTER_ALIGNMENT);
         botao.setMaximumSize(new Dimension(350,40));
+        botao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         botao.addActionListener(e -> janela.abrirBiblioteca());
 
@@ -200,19 +201,32 @@ public class PainelEsquerdo extends JPanel{
         return camada;
     }
 
-    public void atualizarInfo(String nomeMusica, String nomeArtista) {
-        musica.setText(nomeMusica != null ? nomeMusica : "Nenhuma música");
-        musica.setFont(FontePixel.obter(10));
-        artista.setText(nomeArtista != null ? nomeArtista : "Nenhum artista");
-        artista.setFont(FontePixel.obter(10));
-    }
-
     public PainelDisco getDisco() {
         return disco;
     }
 
     public EqualizerBarras getEqualizer() {
         return equalizer;
+    }
+
+    public void atualizarInfo(String nomeMusica, String nomeArtista) {
+
+        musica.setText(nomeMusica != null ? nomeMusica : "Nenhuma música");
+
+        if (nomeArtista == null || nomeArtista.isBlank()) {
+            nomeArtista = "Nenhum artista";
+        }
+
+        artista.setText(nomeArtista);
+
+        musica.setFont(FontePixel.obter(10));
+
+        if (artista.getFont().canDisplayUpTo(nomeArtista) == -1) {
+            artista.setFont(FontePixel.obter(10));
+        }
+        else {
+            artista.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        }
     }
 
     private Janela janela;

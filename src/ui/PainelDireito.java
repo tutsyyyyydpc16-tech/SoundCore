@@ -136,6 +136,8 @@ public class PainelDireito extends JPanel {
                 BorderFactory.createEmptyBorder(10, 15, 10, 15)
         ));
 
+        progresso.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         progresso.addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
@@ -161,6 +163,7 @@ public class PainelDireito extends JPanel {
         listaPlaylist.setSelectionForeground(NEON_VERDE);
         listaPlaylist.setFixedCellHeight(52);
         listaPlaylist.setCellRenderer(new RenderizadorMusica());
+        listaPlaylist.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         listaPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
 
@@ -181,6 +184,7 @@ public class PainelDireito extends JPanel {
         JScrollPane scroll = new JScrollPane(listaPlaylist);
         scroll.getViewport().setBackground(FUNDO);
         scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         JButton remover = new JButton("- Música");
         remover.addActionListener(e -> removerSelecionado());
@@ -189,11 +193,13 @@ public class PainelDireito extends JPanel {
         remover.setBackground(PAINEL);
         remover.setFocusPainted(false);
         remover.setBorder(BorderFactory.createMatteBorder(2,0,0,0, BORDA));
+        remover.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         JPanel baixo = new JPanel(new BorderLayout());
         baixo.add(scroll,BorderLayout.CENTER);
         baixo.add(remover,BorderLayout.SOUTH);
         baixo.setBorder(BorderFactory.createLineBorder(BORDA, 2));
+        baixo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         painelPlaylist.add(baixo, BorderLayout. CENTER);
 
@@ -232,6 +238,7 @@ public class PainelDireito extends JPanel {
         botao.setContentAreaFilled(false);
         botao.setFocusPainted(false);
         botao.setOpaque(false);
+        botao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     private ImageIcon carregarIcon(String caminho, int largura, int altura) {

@@ -44,6 +44,7 @@ public class PainelBiblioteca extends JPanel {
         voltar.setBorderPainted(false);
         voltar.setFocusPainted(false);
         voltar.addActionListener(e -> janela.voltarAoPlayer());
+        voltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         JLabel titulo = new JLabel("BIBLIOTECA");
         titulo.setFont(FontePixel.obter(12));
@@ -57,6 +58,7 @@ public class PainelBiblioteca extends JPanel {
         adicionar.setBorderPainted(false);
         adicionar.setFocusPainted(false);
         adicionar.addActionListener(e -> janela.AbrirMusicaNaBiblioteca());
+        adicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         cabecalho.add(voltar, BorderLayout.WEST);
         cabecalho.add(titulo, BorderLayout.CENTER);
@@ -80,6 +82,7 @@ public class PainelBiblioteca extends JPanel {
         campoBusca.setForeground(Color.WHITE);
         campoBusca.setBackground(FUNDO);
         campoBusca.setCaretColor(TEXTO);
+        campoBusca.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         campoBusca.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(BORDA,1),
                 BorderFactory.createEmptyBorder(6,10,6,10)
@@ -154,6 +157,7 @@ public class PainelBiblioteca extends JPanel {
         listaBiblioteca.setBackground(FUNDO);
         listaBiblioteca.setFixedCellHeight(48);
         listaBiblioteca.setCellRenderer(new RenderizadorBiblioteca(janela));
+        listaBiblioteca.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         listaBiblioteca.addMouseListener(new MouseAdapter() {
             @Override
@@ -187,6 +191,7 @@ public class PainelBiblioteca extends JPanel {
         JScrollPane scroll = new JScrollPane(listaBiblioteca);
         scroll.getViewport().setBackground(FUNDO);
         scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         return scroll;
     }
