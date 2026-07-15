@@ -32,5 +32,5 @@ public class FontePixel {
     }
 
     public static Font fonteBase;
-    private static final Font FONTE_FALLBACK = new Font("Segoe UI", Font.PLAIN, 12);
+    private static final Font FONTE_FALLBACK = new Font(Font.DIALOG, Font.PLAIN, 12);
 }

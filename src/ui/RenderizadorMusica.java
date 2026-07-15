@@ -57,6 +57,7 @@ public class RenderizadorMusica extends JLabel implements ListCellRenderer<Music
         titulo.setText(musica.getNome());
         titulo.setFont(FontePixel.paraTexto(musica.getNome(), 9));
         artista.setText(musica.getArtista() != null ? musica.getArtista() : "Artista desconhecido");
+        artista.setFont(FontePixel.paraTexto(musica.getArtista(), 9));
         tempo.setText(formatarTempo(musica.getDuracaoSegundos()));
 
         Color fundo = isSelected ? FUNDO_SELECIONADO : FUNDO;

@@ -53,12 +53,12 @@ public class PainelEsquerdo extends JPanel{
         musica = new JLabel("Nenhuma música");
         musica.setAlignmentX(Component.LEFT_ALIGNMENT);
         musica.setForeground(NEON_VERDE);
-        musica.setFont(FontePixel.obter(9));
+        musica.setFont(FontePixel.paraTexto(musica.getText(),9));
 
         artista = new JLabel("Nenhum artista");
         artista.setAlignmentX(Component.LEFT_ALIGNMENT);
         artista.setForeground(NEON_AZUL);
-        artista.setFont(FontePixel.obter(9));
+        artista.setFont(FontePixel.paraTexto(musica.getText(), 9));
 
         caixa.add(musica);
         caixa.add(artista);
@@ -216,19 +216,20 @@ public class PainelEsquerdo extends JPanel{
 
     public void atualizarInfo(String nomeMusica, String nomeArtista) {
 
-        if (nomeMusica == null || nomeMusica.isBlank()) {
-            nomeMusica = "Nenhum artista";
+        if (nomeMusica == null) {
+            nomeMusica = "Nenhum música";
         }
+
 
         if (nomeArtista == null || nomeArtista.isBlank()) {
             nomeArtista = "Nenhum artista";
         }
 
-        musica.setText(nomeMusica);
-        musica.setFont(FontePixel.paraTexto(nomeMusica, 9));
-
         artista.setText(nomeArtista);
-        artista.setFont(FontePixel.paraTexto(nomeMusica, 9));
+        artista.setFont(FontePixel.paraTexto(nomeArtista,10));
+
+        musica.setFont(FontePixel.paraTexto(nomeMusica,10));
+        musica.setText(nomeMusica);
 
     }
 
