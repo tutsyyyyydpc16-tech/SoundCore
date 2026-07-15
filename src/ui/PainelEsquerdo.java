@@ -216,22 +216,20 @@ public class PainelEsquerdo extends JPanel{
 
     public void atualizarInfo(String nomeMusica, String nomeArtista) {
 
-        musica.setText(nomeMusica != null ? nomeMusica : "Nenhuma música");
+        if (nomeMusica == null || nomeMusica.isBlank()) {
+            nomeMusica = "Nenhum artista";
+        }
 
         if (nomeArtista == null || nomeArtista.isBlank()) {
             nomeArtista = "Nenhum artista";
         }
 
+        musica.setText(nomeMusica);
+        musica.setFont(FontePixel.paraTexto(nomeMusica, 9));
+
         artista.setText(nomeArtista);
+        artista.setFont(FontePixel.paraTexto(nomeMusica, 9));
 
-        musica.setFont(FontePixel.obter(10));
-
-        if (artista.getFont().canDisplayUpTo(nomeArtista) == -1) {
-            artista.setFont(FontePixel.obter(10));
-        }
-        else {
-            artista.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        }
     }
 
     private Janela janela;

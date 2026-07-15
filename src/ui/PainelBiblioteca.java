@@ -191,7 +191,9 @@ public class PainelBiblioteca extends JPanel {
         JScrollPane scroll = new JScrollPane(listaBiblioteca);
         scroll.getViewport().setBackground(FUNDO);
         scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        scroll.getVerticalScrollBar().setUI(new ScrollBarEscura());
+        scroll.getVerticalScrollBar().setPreferredSize(new Dimension(10,0));
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         return scroll;
     }

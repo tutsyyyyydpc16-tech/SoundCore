@@ -73,6 +73,7 @@ public class RenderizadorBiblioteca extends JPanel implements ListCellRenderer<M
 
         numero.setText(String.format("%02d", index +1));
         titulo.setText(musica.getNome());
+        titulo.setFont(FontePixel.paraTexto(musica.getNome(), 9));
         artista.setText(musica.getArtista() != null ? musica.getArtista() : "Artista desconhecido");
         tempo.setText(formatarTempo(musica.getDuracaoSegundos()));
         botaoMais.setVisible(!janela.estaNaPlaylist(musica));
