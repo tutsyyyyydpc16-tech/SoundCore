@@ -85,7 +85,7 @@ public class Janela extends JFrame {
     private void DefinirIcone() {
 
         try {
-            Image icone = new ImageIcon("Resource/SoundCore.png").getImage();
+            Image icone = new ImageIcon(getClass().getResource("/Resource/SoundCore.png")).getImage();
             setIconImage(icone);
         } catch (Exception e) {
             System.out.println("Não consegui carregar o ícone: " + e.getMessage());

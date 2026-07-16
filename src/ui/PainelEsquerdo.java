@@ -16,7 +16,7 @@ public class PainelEsquerdo extends JPanel{
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createLineBorder(TEXTO, 2));
 
-        fundoImagem = new ImageIcon("Resource/FundoCapa.png").getImage();
+        fundoImagem = new ImageIcon(getClass().getResource("/Resource/FundoCapa.png")).getImage();
 
         JLayeredPane camadaDisco = criarCamadaDisco();
         camadaDisco.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -196,7 +196,7 @@ public class PainelEsquerdo extends JPanel{
         capa.setBounds(0, 0, TAMANHO, TAMANHO);
         camada.add(capa, Integer.valueOf(0));
 
-        Image imagemDisco = new ImageIcon("Resource/Disco.png").getImage();
+        Image imagemDisco = new ImageIcon(getClass().getResource("/Resource/Disco.png")).getImage();
         Image discoEscalado = imagemDisco.getScaledInstance(TAMANHO, TAMANHO, Image.SCALE_SMOOTH);
 
         disco = new PainelDisco(discoEscalado);

@@ -245,7 +245,7 @@ public class PainelDireito extends JPanel {
 
     private ImageIcon carregarIcon(String caminho, int largura, int altura) {
 
-        Image imagem = new ImageIcon(caminho).getImage();
+        Image imagem = new ImageIcon(getClass().getResource("/" + caminho)).getImage();
 
         imagem = imagem.getScaledInstance(largura ,altura, Image.SCALE_SMOOTH);
 

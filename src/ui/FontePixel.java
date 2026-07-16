@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.*;
 import java.io.File;
+import java.io.InputStream;
 
 public class FontePixel {
 
@@ -9,7 +10,10 @@ public class FontePixel {
 
         try {
             if (fonteBase == null) {
-                fonteBase = Font.createFont(Font.TRUETYPE_FONT, new File("Resource/PressStart2P-Regular.ttf"));
+
+                try (InputStream is = FontePixel.class.getResourceAsStream("/Resource/PressStart2P-Regular.ttf")) {
+                    fonteBase = Font.createFont(Font.TRUETYPE_FONT, is);
+                }
             }
 
             return fonteBase.deriveFont((float) tamanho);
