@@ -12,7 +12,12 @@ import java.util.List;
 
 public class PlaylistStorage {
 
-    private static final String ARQUIVO = "playlist.txt";
+    private static final String PASTA_DADOS = System.getProperty("user.home") + File.separator + "SoundCoreData";
+    private static final String ARQUIVO = PASTA_DADOS + File.separator + "playlist.txt";
+
+    public PlaylistStorage() {
+        new File(PASTA_DADOS).mkdirs();
+    }
 
     public void salvar(List<Musica> playlist) {
 

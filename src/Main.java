@@ -1,4 +1,5 @@
 import app.Janela;
+import com.formdev.flatlaf.FlatDarkLaf;
 import javafx.application.Platform;
 
 import javax.swing.*;
@@ -6,6 +7,8 @@ import javax.swing.*;
 public class Main {
 
     public static void main (String[] args) {
+
+        FlatDarkLaf.setup();
 
         Platform.startup(() -> {});
         Platform.setImplicitExit(false);

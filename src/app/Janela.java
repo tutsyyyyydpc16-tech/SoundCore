@@ -124,6 +124,7 @@ public class Janela extends JFrame {
 
         JFileChooser musicas = new JFileChooser();
         musicas.setCurrentDirectory(new File("."));
+        musicas.setMultiSelectionEnabled(true);
 
         FileNameExtensionFilter filtros = new FileNameExtensionFilter("Músicas (*.mp3)",
                 "mp3");
@@ -135,14 +136,18 @@ public class Janela extends JFrame {
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
-            Musica nova = new Musica(
-                    musicas.getSelectedFile().getName(),
-                    musicas.getSelectedFile().getPath()
-            );
+            for (File arquivoSelecionado : musicas.getSelectedFiles()) {
 
-            lerMetadados(nova);
+                Musica nova = new Musica(
+                        arquivoSelecionado.getName(),
+                        arquivoSelecionado.getPath()
+                );
 
-            ui.getPainelDireito().adicionarMusica(nova);
+                lerMetadados(nova);
+
+                ui.getPainelDireito().adicionarMusica(nova);
+
+            }
         }
     }
 
@@ -316,6 +321,7 @@ public class Janela extends JFrame {
 
         JFileChooser musicas = new JFileChooser();
         musicas.setCurrentDirectory(new File("."));
+        musicas.setMultiSelectionEnabled(true);
 
         FileNameExtensionFilter filtros = new FileNameExtensionFilter("Músicas (*.mp3)", "mp3");
         musicas.setFileFilter(filtros);
@@ -325,14 +331,18 @@ public class Janela extends JFrame {
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
-            Musica nova = new Musica(
-                    musicas.getSelectedFile().getName(),
-                    musicas.getSelectedFile().getPath()
-            );
+            for (File arquivoSelecionado : musicas.getSelectedFiles()) {
 
-            lerMetadados(nova);
+                Musica nova = new Musica(
+                        arquivoSelecionado.getName(),
+                        arquivoSelecionado.getPath()
+                );
 
-            ui.getPainelBiblioteca().adicionarMusica(nova);
+                lerMetadados(nova);
+
+                ui.getPainelBiblioteca().adicionarMusica(nova);
+
+            }
         }
     }
 

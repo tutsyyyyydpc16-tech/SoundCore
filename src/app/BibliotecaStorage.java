@@ -11,7 +11,12 @@ import java.util.List;
 
 public class BibliotecaStorage {
 
-    public static final String ARQUIVO = "biblioteca.txt";
+    private static final String PASTA_DADOS = System.getProperty("user.home") + File.separator + "SoundCoreData";
+    public static final String ARQUIVO = PASTA_DADOS + File.separator + "biblioteca.txt";
+
+    public BibliotecaStorage() {
+        new File(PASTA_DADOS).mkdirs();
+    }
 
     public void salvar(List<Musica> biblioteca) {
 
